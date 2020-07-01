@@ -28,6 +28,7 @@ td {
   color: #fff;
   text-align: center;
   border-radius: 10%;
+  cursor: pointer;
 }
 
 #player {
@@ -36,6 +37,11 @@ td {
 
 #undo {
   float: right;
+  cursor: pointer;
+}
+
+#new {
+  float: left;
   cursor: pointer;
 }
 

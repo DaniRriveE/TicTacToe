@@ -5,9 +5,8 @@ const
   EMPTY = '&nbsp;',
   WIN_SEQUENCE_LENGTH = 5;
 var
-  boxes = [],
   turn = 'X',
-  moves;
+  turns = [];
 
 /**
  * Initializes the Tic Tac Toe board and starts the game.
@@ -29,12 +28,12 @@ function init() {
       cell.classList.add('col' + j, 'row' + i);
       cell.addEventListener('click', setTurn);
       row.appendChild(cell);
-      boxes.push(cell);
     }
   }
 
   document.getElementById('tictactoe').appendChild(board);
   document.getElementById('undo').addEventListener('click', unsetTurn);
+  document.getElementById('new').addEventListener('click', startNewGame);
   startNewGame();
 }
 
@@ -42,9 +41,9 @@ function init() {
  * Clear board and prepare for new game
  */
 function startNewGame() {
-  moves = 0;
+  turns = [];
   turn = 'X';
-  boxes.forEach(function (square) {
+  document.querySelectorAll("#board td").forEach(function (square) {
     square.innerHTML = EMPTY;
   });
   displayCurrentPlayer();
@@ -62,10 +61,10 @@ function setTurn() {
     return;
   }
   this.innerHTML = turn;
-  moves += 1;
+  turns.push(this);
   if (isWinner(this)) {
     displayFinalMessage('Winner: Player ' + turn);
-  } else if (moves === N_SIZE * N_SIZE) {
+  } else if (turns.length === N_SIZE * N_SIZE) {
     displayFinalMessage('Draw');
   } else {
     turn = turn === 'X' ? 'O' : 'X';
@@ -74,7 +73,11 @@ function setTurn() {
 }
 
 function unsetTurn() {
-  alert('undo');
+  if (turns.length === 0) return;
+  let cell = turns.pop();
+  cell.innerHTML = EMPTY;
+  turn = turn === 'X' ? 'O' : 'X';
+  displayCurrentPlayer();
 }
 
 function displayFinalMessage(msg) {
