@@ -62,6 +62,9 @@ function setTurn() {
   }
   this.innerHTML = turn;
   turns.push(this);
+  
+  document.querySelectorAll('.last-cell').forEach((el) => el.classList.remove('last-cell'));
+  this.classList.add('last-cell');
   if (isWinner(this)) {
     displayFinalMessage('Winner: Player ' + turn);
   } else if (turns.length === N_SIZE * N_SIZE) {
@@ -76,6 +79,10 @@ function unsetTurn() {
   if (turns.length === 0) return;
   let cell = turns.pop();
   cell.innerHTML = EMPTY;
+
+  document.querySelectorAll('.last-cell').forEach((el) => el.classList.remove('last-cell'));
+  if (turns.length > 0) turns[turns.length-1].classList.add('last-cell');
+
   turn = turn === 'X' ? 'O' : 'X';
   displayCurrentPlayer();
 }

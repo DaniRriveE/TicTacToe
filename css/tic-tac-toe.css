@@ -31,6 +31,10 @@ td {
   cursor: pointer;
 }
 
+.last-cell {
+  color: red;
+}
+
 #player {
   padding: 1rem;
 }
